@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(() => {
       {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlMatches: "https://www.google.com/*" },
+            pageUrl: { urlMatches: "https://linkedin.com/*" },
           }),
         ],
         // And shows the extension's page action.

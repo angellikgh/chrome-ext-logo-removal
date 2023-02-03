@@ -13,8 +13,68 @@ function unloadCSS() {
 
 function setBg(css) {
   unloadCSS();
-  setTimeout(() => loadCSS(css));
+  setTimeout(() => {
+    loadCSS(css)
+  });
 }
+
+/** START: Remove LN assets  */
+function hideElement(query) {
+	const element = document.querySelector(query);
+	element && (element.style.display = 'none');
+}
+
+function changeFavicon() {
+  var link = document.getElementById('favicon-svg')
+  if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.getElementsByTagName('head')[0].appendChild(link);
+  }
+  link.href = 'https://stackoverflow.com/favicon.ico';
+}
+
+function changeTitle() {
+  document.title = document.title.replace("LinkedIn", "Glassdor")
+}
+
+function changeHeader() {
+  hideElement('.global-nav__branding-logo');
+  hideElement('.nav__logo-link');
+
+  const globalNav = document.getElementById('global-nav')
+
+	if (globalNav) {
+	  globalNav.style.display = 'none';
+	  globalNav.style.display = ''
+	
+	  window.addEventListener('mousemove', function(event) {
+	    if (event.clientY < 100) {
+	      globalNav.style.display = 'block'
+	    }
+	    else {
+	      globalNav.style.display = 'none'
+	    }
+	  })
+	}
+}
+
+function changeFooter() {
+	hideElement('.global-footer-compact__content');
+	hideElement('#compactfooter-copyright');
+}
+
+// Remove assets (meta title, logo)
+function removeAssets() {
+  setTimeout(() => {
+    changeFavicon();
+    changeTitle();
+    changeHeader();
+    changeFooter();
+  });
+}
+
+/** END: Remove LN assets  */
 
 chrome.runtime.onMessage.addListener((req, p1, p2) => {
   if (req.cmd === "setBg") {
@@ -22,6 +82,7 @@ chrome.runtime.onMessage.addListener((req, p1, p2) => {
   } else if (req.cmd === "clearBg") {
     unloadCSS();
   } else if (req.cmd === "fetchBg") {
+    removeAssets();
     chrome.storage.sync.get("image", (url) => {
       if (url.image) {
         setBg(convertIntoCss(url.image));
