@@ -42,6 +42,8 @@ function changeTitle() {
 function changeHeader() {
   hideElement('.global-nav__branding-logo');
   hideElement('.nav__logo-link');
+  hideElement('.footer__base__wrapper')
+  hideElement('#linkedin-logo')
 
   const globalNav = document.getElementById('global-nav')
 
