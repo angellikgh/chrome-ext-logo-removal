@@ -15,6 +15,7 @@ function setBg(css) {
   unloadCSS();
   setTimeout(() => {
     loadCSS(css)
+    removeAssets();
   });
 }
 
